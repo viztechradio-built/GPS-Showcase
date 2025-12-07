@@ -1,0 +1,5 @@
+170:            console.log(`Setting ${settingKey} changed to:`, value);
+354:            console.log('Initializing Google Maps Street View...');
+355:            console.log('GPS API Key Required');
+388:        console.log('GPS-Showcase interface activated');
+494:            console.log('AI Voice Command Search:', query);

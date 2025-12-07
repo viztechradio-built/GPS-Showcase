@@ -1,0 +1,14 @@
+total 16320
+drwxr-xr-x  3 user user    4096 Dec  6 17:52 .
+drwxr-xr-x 20 root root    4096 Nov 25 05:51 ..
+-rw-r--r--  1 root root 3439745 Nov 19 21:18 20251113_135822.jpg
+-rw-r--r--  1 root root 3231891 Nov 19 21:18 20251113_135939.jpg
+-rw-r--r--  1 root root 2485943 Nov 19 21:18 20251113_140040.jpg
+-rw-r--r--  1 root root 3049071 Nov 19 21:18 20251113_140205.jpg
+-rw-r--r--  1 root root 3789547 Nov 19 21:18 20251113_140313.jpg
+-rw-r--r--  1 root root  618838 Nov 19 21:18 20251113_145020.jpg
+-rw-r--r--  1 root root   14746 Nov 19 21:19 index.html
+drwxr-xr-x  2 root root    4096 Dec  6 19:40 outputs
+-rw-r--r--  1 root root   21787 Nov 19 21:19 script.js
+-rw-r--r--  1 root root   22096 Nov 19 21:19 styles.css
+-rw-r--r--  1 root root    3007 Nov 19 21:20 todo.md
