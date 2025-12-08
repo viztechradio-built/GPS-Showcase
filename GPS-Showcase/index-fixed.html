@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GPS-Showcase - A Smart City Ecosystem platform for personalized restaurant and establishment discovery">
+    <meta name="keywords" content="GPS, restaurants, navigation, smart city, travel, dining">
+    <meta name="author" content="James Gordon Watkins">
+    <title>GPS-Showcase - Create Account</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Landing Page / Create Account Page -->
+        <div id="landingPage" class="page active">
+            <div class="container">
+                <header class="logo-section">
+                    <div class="logo">
+                        <div class="logo-icon" aria-hidden="true">📍</div>
+                        <h1>GPS-Showcase</h1>
+                    </div>
+                    <p class="tagline">Discover. Experience. Navigate.</p>
+                </header>
+
+                <main class="auth-section">
+                    <div class="auth-form">
+                        <h2>Create Your Account</h2>
+                        <p class="form-subtitle">Join the Smart City Ecosystem</p>
+                        
+                        <form id="createAccountForm" aria-label="Create account form">
+                            <div class="form-group">
+                                <label for="businessName" class="sr-only">Business Name</label>
+                                <input type="text" id="businessName" name="businessName" placeholder="Business Name" required aria-required="true">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="sr-only">Email Address</label>
+                                <input type="email" id="email" name="email" placeholder="Email Address" required aria-required="true">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone" class="sr-only">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" placeholder="Phone Number" required aria-required="true">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="password" class="sr-only">Password</label>
+                                <input type="password" id="password" name="password" placeholder="Password (min 8 characters)" required aria-required="true" minlength="8">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirmPassword" class="sr-only">Confirm Password</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required aria-required="true" minlength="8">
+                            </div>
+                            
+                            <button type="submit" class="neon-button">Create Account</button>
+                        </form>
+                        
+                        <div class="auth-divider" aria-hidden="true">
+                            <span>or</span>
+                        </div>
+                        
+                        <button id="startQuestionnaire" class="secondary-button">Start Questionnaire</button>
+                        
+                        <p class="auth-footer">
+                            Already have an account? <a href="#" class="neon-link">Sign In</a>
+                        </p>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- Restaurant Questionnaire Pages -->
+        <div id="questionnairePage" class="page">
+            <div class="questionnaire-container">
+                <header class="questionnaire-header">
+                    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <h2 id="questionTitle">Let's get to know your business</h2>
+                </header>
+
+                <main class="questionnaire-content">
+                    <div id="questionContainer" class="question-container">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- Thank You Page -->
+        <div id="thankYouPage" class="page">
+            <div class="thank-you-container">
+                <div class="success-icon" aria-hidden="true">✓</div>
+                <h1>Thank You!</h1>
+                <h2>Your Profile Has Been Created Successfully...</h2>
+                <p>Welcome to the GPS-Showcase Smart City Ecosystem</p>
+                <button id="goToHome" class="neon-button">Go to GPS-Showcase Home</button>
+            </div>
+        </div>
+
+        <!-- GPS-Showcase Home Page -->
+        <div id="homePage" class="page">
+            <!-- Google Maps Container -->
+            <div class="map-container" id="mapContainer" role="region" aria-label="Google Maps Street View">
+                <div class="map-placeholder">
+                    <div class="map-loading">
+                        <div class="loading-spinner" aria-hidden="true"></div>
+                        <p>Loading Google Maps Street View...</p>
+                        <p class="api-note">GPS API Key Required</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Left Sidebar -->
+            <nav class="sidebar" id="sidebar" aria-label="Main navigation">
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <div class="sidebar-nav">
+                    <div class="nav-item" title="Live Feed">
+                        <button class="nav-circle" id="liveFeedBtn" aria-label="Live Feed">
+                            <span class="nav-icon" aria-hidden="true">🔴</span>
+                        </button>
+                        <span class="nav-label">Live Feed</span>
+                    </div>
+                    
+                    <div class="nav-item active" title="GPS-Showcase">
+                        <button class="nav-circle" id="gpsShowcaseBtn" aria-label="GPS-Showcase">
+                            <span class="nav-icon" aria-hidden="true">🌐</span>
+                        </button>
+                        <span class="nav-label">GPS-Showcase</span>
+                    </div>
+                    
+                    <div class="nav-item" title="Media ENT">
+                        <button class="nav-circle" aria-label="Media Entertainment">
+                            <span class="nav-icon" aria-hidden="true">🎬</span>
+                        </button>
+                        <span class="nav-label">Media ENT</span>
+                    </div>
+                    
+                    <div class="nav-item" title="Playlist">
+                        <button class="nav-circle" aria-label="Playlist">
+                            <span class="nav-icon" aria-hidden="true">📋</span>
+                        </button>
+                        <span class="nav-label">Playlist</span>
+                    </div>
+                </div>
+
+                <div class="category-filters">
+                    <div class="toggle-group" role="tablist" aria-label="View toggle">
+                        <button class="toggle-btn active" id="favoritesToggle" role="tab" aria-selected="true" aria-controls="favoritesView">Favorites</button>
+                        <button class="toggle-btn" id="allToggle" role="tab" aria-selected="false" aria-controls="allView">All</button>
+                    </div>
+                    
+                    <div class="scale-column">
+                        <h3>Restaurants</h3>
+                        <div class="column-categories" role="menu" aria-label="Restaurant categories">
+                            <button class="category-btn" data-category="fast-casual" role="menuitem">Fast Casual</button>
+                            <button class="category-btn" data-category="fine-dining" role="menuitem">Fine Dining</button>
+                            <button class="category-btn" data-category="casual-dining" role="menuitem">Casual Dining</button>
+                            <button class="category-btn" data-category="ethnic-cuisine" role="menuitem">Ethnic Cuisine</button>
+                            <button class="category-btn" data-category="food-trucks" role="menuitem">Food Trucks</button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <button class="hamburger-menu" id="hamburgerMenu" aria-label="Open settings menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <div class="ai-command-bar" role="search">
+                    <label for="aiCommandInput" class="sr-only">AI Voice Command Search</label>
+                    <input type="text" placeholder="AI-Voice Command Search..." id="aiCommandInput" aria-label="Search restaurants">
+                    <button class="search-btn" id="searchBtn" aria-label="Search">🔍</button>
+                </div>
+            </div>
+
+            <!-- Settings Dropdown -->
+            <div class="settings-dropdown" id="settingsDropdown" role="dialog" aria-label="Settings">
+                <div class="settings-content">
+                    <div class="setting-group">
+                        <h4>Radius Mode</h4>
+                        <label class="toggle-label">
+                            <span>25 ↔ 50 Miles</span>
+                            <input type="checkbox" id="radiusToggle" aria-label="Toggle radius mode">
+                            <span class="toggle-slider" aria-hidden="true"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h4>AI Features</h4>
+                        <label class="toggle-label">
+                            <span>AI-Voice Command</span>
+                            <input type="checkbox" id="aiVoiceToggle" checked aria-label="Toggle AI voice command">
+                            <span class="toggle-slider" aria-hidden="true"></span>
+                        </label>
+                        
+                        <label class="toggle-label">
+                            <span>AI-Recommendations</span>
+                            <input type="checkbox" id="aiRecommendToggle" checked aria-label="Toggle AI recommendations">
+                            <span class="toggle-slider" aria-hidden="true"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h4>Display Mode</h4>
+                        <label class="toggle-label">
+                            <span>Light Mode</span>
+                            <input type="checkbox" id="lightModeToggle" aria-label="Toggle light mode">
+                            <span class="toggle-slider" aria-hidden="true"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h4>Vibe Level Mode</h4>
+                        <label class="toggle-label">
+                            <span>High</span>
+                            <input type="checkbox" id="vibeHighToggle" aria-label="Toggle high vibe level">
+                            <span class="toggle-slider" aria-hidden="true"></span>
+                        </label>
+                        
+                        <label class="toggle-label">
+                            <span>Mid</span>
+                            <input type="checkbox" id="vibeMidToggle" aria-label="Toggle mid vibe level">
+                            <span class="toggle-slider" aria-hidden="true"></span>
+                        </label>
+                        
+                        <label class="toggle-label">
+                            <span>Low</span>
+                            <input type="checkbox" id="vibeLowToggle" aria-label="Toggle low vibe level">
+                            <span class="toggle-slider" aria-hidden="true"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Feed Video Block -->
+            <div class="live-feed-block" id="liveFeedBlock" role="region" aria-label="Live feed video">
+                <div class="video-container">
+                    <div class="video-placeholder">
+                        <div class="video-loading">
+                            <div class="loading-spinner" aria-hidden="true"></div>
+                            <p>Live Feed Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area" id="contentArea">
+                <!-- Favorites View -->
+                <div id="favoritesView" class="view-content active" role="tabpanel" aria-labelledby="favoritesToggle">
+                    <div class="restaurant-list" id="restaurantList" role="list" aria-label="Restaurant list">
+                        <!-- Restaurant cards will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <!-- All View -->
+                <div id="allView" class="view-content" role="tabpanel" aria-labelledby="allToggle">
+                    <div class="business-description">
+                        <h2>Business Description</h2>
+                        <p>Discover amazing restaurants and establishments in your area...</p>
+                    </div>
+                    
+                    <div class="video-reel" aria-label="Video reel">
+                        <div class="video-placeholder">
+                            <div class="video-loading">
+                                <div class="loading-spinner" aria-hidden="true"></div>
+                                <p>Video Reel Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn" aria-label="Get route">Route</button>
+                        <button class="action-btn" aria-label="Make reservation">Reservations</button>
+                        <button class="action-btn" aria-label="Add to favorites">Favorites</button>
+                    </div>
+                    
+                    <div class="curated-list" id="curatedList" role="list" aria-label="Curated restaurant list">
+                        <!-- Curated restaurant list will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Detail Panel -->
+            <aside class="business-detail-panel" id="businessDetailPanel" role="complementary" aria-label="Business details">
+                <div class="video-reel" aria-label="Business video reel">
+                    <div class="video-placeholder">
+                        <div class="video-loading">
+                            <div class="loading-spinner" aria-hidden="true"></div>
+                            <p>Video Reel Loading...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="business-actions">
+                    <button class="route-btn" aria-label="Get route to business">Route</button>
+                    <button class="reservation-btn" aria-label="Make reservation">Reservation</button>
+                </div>
+                
+                <div class="business-info">
+                    <div class="business-header">
+                        <h3 id="businessName">Restaurant Name</h3>
+                        <button class="add-favorites-btn" aria-label="Add to favorites">★ Add to Favorites</button>
+                    </div>
+                    
+                    <div class="business-hours">
+                        <span>Hours of Service:</span>
+                        <div class="status-light" id="statusLight" aria-label="Business status">
+                            <div class="light green"></div>
+                        </div>
+                    </div>
+                    
+                    <button class="review-btn" aria-label="View reviews">⭐ Reviews</button>
+                    
+                    <div class="business-description">
+                        <p id="businessDescription">Restaurant description will appear here...</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script src="script-fixed.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+-rw-r--r-- 1 root root  757 Dec  6 19:41 .gitignore
+-rw-r--r-- 1 root root 7.9K Dec  6 19:47 CONTRIBUTING.md
+-rw-r--r-- 1 root root  18K Dec  6 19:46 DEPLOYMENT-GUIDE.md
+-rw-r--r-- 1 root root  15K Dec  6 19:48 DEPLOYMENT-SUMMARY.md
+-rw-r--r-- 1 root root 6.3K Dec  6 19:47 QUICK-START.md
+-rw-r--r-- 1 root root 5.4K Dec  6 19:41 README.md
+-rw-r--r-- 1 root root  18K Dec  6 19:43 index-fixed.html
+-rw-r--r-- 1 root root  15K Nov 19 21:19 index.html
+-rw-r--r-- 1 root root 1.1K Dec  6 19:46 package.json
+-rw-r--r-- 1 root root  28K Dec  6 19:42 script-fixed.js
+-rw-r--r-- 1 root root  22K Nov 19 21:19 script.js
+-rw-r--r-- 1 root root  26K Dec  6 19:45 styles-fixed.css
+-rw-r--r-- 1 root root  22K Nov 19 21:19 styles.css
+-rw-r--r-- 1 root root 4.0K Dec  6 19:41 test-report.md
+-rw-r--r-- 1 root root 4.7K Dec  6 19:49 todo.md

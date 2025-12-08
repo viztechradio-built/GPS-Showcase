@@ -1,0 +1,40 @@
+{
+  "name": "gps-showcase",
+  "version": "1.0.0",
+  "description": "A Smart City Ecosystem platform for personalized restaurant and establishment discovery",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx http-server -p 8000 -o",
+    "minify-css": "cleancss -o styles.min.css styles.css",
+    "minify-js": "uglifyjs script.js -o script.min.js -c -m",
+    "build": "npm run minify-css && npm run minify-js",
+    "deploy": "gh-pages -d ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/GPS-Showcase.git"
+  },
+  "keywords": [
+    "gps",
+    "navigation",
+    "restaurants",
+    "smart-city",
+    "travel",
+    "dining",
+    "discovery",
+    "maps"
+  ],
+  "author": "James Gordon Watkins",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yourusername/GPS-Showcase/issues"
+  },
+  "homepage": "https://gps-showcase.com",
+  "devDependencies": {
+    "clean-css-cli": "^5.6.2",
+    "gh-pages": "^6.0.0",
+    "http-server": "^14.1.1",
+    "uglify-js": "^3.17.4"
+  }
+}
