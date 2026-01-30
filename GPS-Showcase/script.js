@@ -8,6 +8,8 @@ class GPSShowcase {
         this.totalQuestions = 6;
         this.restaurants = [];
         this.selectedRestaurant = null;
+        this.currentRestaurantIndex = 0;
+        this.clockInterval = null;
         this.settings = {
             radiusMode: false,
             aiVoiceCommand: true,
@@ -340,173 +342,145 @@ class GPSShowcase {
     }
     
     initializeHome() {
-        // Initialize Google Maps (placeholder)
-        this.initializeMap();
-        
-        // Load restaurant data
-        this.displayRestaurants();
+        this.currentRestaurantIndex = 0;
+        this.renderHero();
+        this.renderCarousel();
+        this.startClock();
+        this.setupHomeEventListeners();
     }
-    
-    initializeMap() {
-        const mapContainer = document.getElementById('mapContainer');
-        if (mapContainer) {
-            // In real implementation, this would initialize Google Maps Street View
-            console.log('Initializing Google Maps Street View...');
-            console.log('GPS API Key Required');
-        }
+
+    startClock() {
+        const el = document.querySelector('.hp-time');
+        if (!el) return;
+        const update = () => {
+            const now = new Date();
+            el.textContent = now.toLocaleTimeString('en-US', {
+                hour: 'numeric', minute: '2-digit', hour12: true
+            });
+        };
+        update();
+        if (this.clockInterval) clearInterval(this.clockInterval);
+        this.clockInterval = setInterval(update, 10000);
     }
-    
-    toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        if (sidebar) {
-            sidebar.classList.toggle('collapsed');
-        }
+
+    renderHero() {
+        const r = this.restaurants[this.currentRestaurantIndex];
+        if (!r) return;
+        const photo = document.getElementById('hpHeroPhoto');
+        const name = document.getElementById('hpHeroName');
+        const addr = document.getElementById('hpHeroAddress');
+        if (photo) photo.style.background = r.photoGradient;
+        if (name) name.textContent = r.name;
+        if (addr) addr.textContent = r.address;
     }
-    
-    toggleSettings() {
-        const settingsDropdown = document.getElementById('settingsDropdown');
-        if (settingsDropdown) {
-            settingsDropdown.classList.toggle('active');
-        }
-    }
-    
-    toggleLiveFeed() {
-        const liveFeedBlock = document.getElementById('liveFeedBlock');
-        const liveFeedBtn = document.getElementById('liveFeedBtn');
-        
-        if (liveFeedBlock) {
-            liveFeedBlock.classList.toggle('active');
-        }
-        
-        if (liveFeedBtn) {
-            liveFeedBtn.parentElement.classList.toggle('active');
-        }
-    }
-    
-    activateGPSShowcase() {
-        // Activate the full interface
-        console.log('GPS-Showcase interface activated');
-        
-        // Update nav state
-        const navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach(item => item.classList.remove('active'));
-        document.getElementById('gpsShowcaseBtn').parentElement.classList.add('active');
-    }
-    
-    toggleView(view) {
-        const favoritesToggle = document.getElementById('favoritesToggle');
-        const allToggle = document.getElementById('allToggle');
-        const favoritesView = document.getElementById('favoritesView');
-        const allView = document.getElementById('allView');
-        
-        if (view === 'favorites') {
-            favoritesToggle.classList.add('active');
-            allToggle.classList.remove('active');
-            favoritesView.classList.add('active');
-            allView.classList.remove('active');
-        } else {
-            allToggle.classList.add('active');
-            favoritesToggle.classList.remove('active');
-            allView.classList.add('active');
-            favoritesView.classList.remove('active');
-        }
-    }
-    
-    selectCategory(categoryBtn) {
-        // Remove previous selection
-        document.querySelectorAll('.category-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        
-        // Add selection to clicked button
-        categoryBtn.classList.add('active');
-        
-        // Filter restaurants by category
-        const category = categoryBtn.dataset.category;
-        this.filterRestaurantsByCategory(category);
-    }
-    
-    filterRestaurantsByCategory(category) {
-        const filteredRestaurants = this.restaurants.filter(restaurant => {
-            return restaurant.category === category;
-        });
-        
-        this.displayRestaurantList(filteredRestaurants);
-    }
-    
-    displayRestaurantList(restaurants = this.restaurants) {
-        const restaurantList = document.getElementById('restaurantList');
-        if (!restaurantList) return;
-        
-        restaurantList.innerHTML = '';
-        
-        restaurants.forEach(restaurant => {
+
+    renderCarousel(list) {
+        const track = document.getElementById('hpCarouselTrack');
+        if (!track) return;
+        const data = list || this.restaurants;
+        track.innerHTML = '';
+        data.forEach((r, i) => {
             const card = document.createElement('div');
-            card.className = 'restaurant-card';
+            card.className = 'hp-carousel-card' + (i === this.currentRestaurantIndex ? ' active' : '');
+            card.dataset.index = i;
+            const stars = '★'.repeat(Math.floor(r.rating)) + (r.rating % 1 >= 0.5 ? '½' : '');
             card.innerHTML = `
-                <div class="restaurant-image">
-                    ${restaurant.name.charAt(0)}
-                </div>
-                <div class="restaurant-info">
-                    <div class="restaurant-name">${restaurant.name}</div>
-                    <div class="restaurant-category">${restaurant.category}</div>
+                <div class="hp-card-photo" style="background:${r.photoGradient}"></div>
+                <div class="hp-card-body">
+                    <div class="hp-card-name">${r.name}</div>
+                    <div class="hp-card-rating">${stars}<span class="hp-card-reviews">(${r.reviewCount})</span></div>
                 </div>
             `;
-            
-            card.addEventListener('click', () => this.selectRestaurant(restaurant));
-            restaurantList.appendChild(card);
+            card.addEventListener('click', () => {
+                this.currentRestaurantIndex = this.restaurants.indexOf(r);
+                this.renderHero();
+                track.querySelectorAll('.hp-carousel-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+            });
+            track.appendChild(card);
         });
     }
-    
-    selectRestaurant(restaurant) {
-        this.selectedRestaurant = restaurant;
-        
-        // Update card selection
-        document.querySelectorAll('.restaurant-card').forEach(card => {
-            card.classList.remove('active');
-        });
-        event.currentTarget.classList.add('active');
-        
-        // Display restaurant details
-        this.displayRestaurantDetails(restaurant);
+
+    renderCarouselFiltered(list) {
+        this.renderCarousel(list);
     }
-    
-    displayRestaurantDetails(restaurant) {
-        const businessName = document.getElementById('businessName');
-        const businessDescription = document.getElementById('businessDescription');
-        const statusLight = document.getElementById('statusLight');
-        
-        if (businessName) businessName.textContent = restaurant.name;
-        if (businessDescription) businessDescription.textContent = restaurant.description;
-        
-        // Update status light based on hours
-        if (statusLight) {
-            const light = statusLight.querySelector('.light');
-            light.className = 'light ' + restaurant.status;
+
+    setupHomeEventListeners() {
+        // Media control buttons
+        document.querySelectorAll('.hp-ctrl-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const dir = btn.dataset.dir;
+                const len = this.restaurants.length;
+                if (dir === 'prev') {
+                    this.currentRestaurantIndex = (this.currentRestaurantIndex - 1 + len) % len;
+                } else if (dir === 'next') {
+                    this.currentRestaurantIndex = (this.currentRestaurantIndex + 1) % len;
+                } else if (dir === 'forward') {
+                    this.currentRestaurantIndex = (this.currentRestaurantIndex + 2) % len;
+                }
+                this.renderHero();
+                this.renderCarousel();
+            });
+        });
+
+        // Sidebar nav clicks
+        document.querySelectorAll('.hp-nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const section = item.dataset.section;
+                this.handleNavSelection(section);
+                document.querySelectorAll('.hp-nav-item').forEach(n => n.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        // Action buttons
+        document.querySelectorAll('.hp-action-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const action = btn.dataset.action;
+                const r = this.restaurants[this.currentRestaurantIndex];
+                if (action === 'favourite') {
+                    this.showNotification(`Added "${r.name}" to Favourites`, 'success');
+                } else if (action === 'reservation') {
+                    this.showNotification(`Opening reservation for "${r.name}"`, 'info');
+                } else {
+                    this.showNotification(`Routing to "${r.name}"`, 'info');
+                }
+            });
+        });
+    }
+
+    handleNavSelection(section) {
+        const titleEl = document.querySelector('.hp-section-title');
+
+        if (section === 'showcase' || section === 'restaurants' || section === 'favourite-all' || section === 'playlist') {
+            if (titleEl) {
+                const labels = {
+                    'showcase': 'Showcase',
+                    'restaurants': 'Restaurants',
+                    'favourite-all': 'Favourite All',
+                    'playlist': 'Playlist'
+                };
+                titleEl.textContent = labels[section] || 'Restaurants';
+            }
+            this.currentRestaurantIndex = 0;
+            this.renderHero();
+            this.renderCarousel();
+            return;
         }
-    }
-    
-    handleSearch() {
-        const searchInput = document.getElementById('aiCommandInput');
-        const query = searchInput.value.trim();
-        
-        if (query) {
-            console.log('AI Voice Command Search:', query);
-            this.showNotification(`Searching for: ${query}`, 'info');
-            
-            // In real implementation, this would trigger AI-powered search
-            this.performSearch(query);
+
+        // Category filter
+        const filtered = this.restaurants.filter(r => r.category === section);
+        if (filtered.length > 0) {
+            this.currentRestaurantIndex = this.restaurants.indexOf(filtered[0]);
+            this.renderHero();
+            this.renderCarouselFiltered(filtered);
+        } else {
+            this.showNotification('No restaurants in this category', 'info');
         }
-    }
-    
-    performSearch(query) {
-        // Simulate search functionality
-        const results = this.restaurants.filter(restaurant => {
-            return restaurant.name.toLowerCase().includes(query.toLowerCase()) ||
-                   restaurant.category.toLowerCase().includes(query.toLowerCase());
-        });
-        
-        this.displayRestaurantList(results);
+
+        if (titleEl) {
+            titleEl.textContent = section.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        }
     }
     
     showNotification(message, type = 'info') {
@@ -519,8 +493,8 @@ class GPSShowcase {
             top: 20px;
             right: 20px;
             padding: 15px 20px;
-            background: ${type === 'error' ? '#ff4444' : type === 'success' ? '#00ff88' : '#00d4ff'};
-            color: ${type === 'error' || type === 'success' ? '#000' : '#fff'};
+            background: ${type === 'error' ? '#ff4444' : type === 'success' ? '#00ff88' : '#D4AF37'};
+            color: #000;
             border-radius: 8px;
             font-weight: 600;
             z-index: 10000;
@@ -536,67 +510,84 @@ class GPSShowcase {
     }
     
     loadSampleData() {
-        // Sample restaurant data
         this.restaurants = [
             {
                 id: 1,
                 name: 'Neon Bistro',
-                category: 'Fast Casual',
-                description: 'A modern fast-casual restaurant serving innovative fusion cuisine with a neon-inspired atmosphere. Perfect for quick lunches and casual dinners.',
+                category: 'fast-casual',
+                description: 'A modern fast-casual restaurant serving innovative fusion cuisine with a neon-inspired atmosphere.',
+                address: '1501 Pike Place, Seattle, WA 98101',
                 status: 'green',
                 hours: 'Open until 10 PM',
-                rating: 4.5
+                rating: 4.5,
+                reviewCount: 328,
+                photoGradient: 'linear-gradient(135deg, #1a3a2a 0%, #0d2818 50%, #1a4030 100%)'
             },
             {
                 id: 2,
                 name: 'Azure Fine Dining',
-                category: 'Fine Dining',
-                description: 'An exquisite fine dining experience featuring artisanal cuisine prepared with the finest ingredients. Elegant atmosphere perfect for special occasions.',
+                category: 'fine-dining',
+                description: 'An exquisite fine dining experience featuring artisanal cuisine prepared with the finest ingredients.',
+                address: '2010 4th Ave, Seattle, WA 98121',
                 status: 'yellow',
                 hours: 'Open until 11 PM',
-                rating: 4.8
+                rating: 4.8,
+                reviewCount: 512,
+                photoGradient: 'linear-gradient(135deg, #2a1a3a 0%, #18102a 50%, #301a40 100%)'
             },
             {
                 id: 3,
                 name: 'Urban Kitchen',
-                category: 'Casual Dining',
-                description: 'A cozy casual dining spot offering comfort food with a modern twist. Great for families and groups looking for a relaxed atmosphere.',
+                category: 'casual-dining',
+                description: 'A cozy casual dining spot offering comfort food with a modern twist.',
+                address: '400 Broad St, Seattle, WA 98109',
                 status: 'green',
                 hours: 'Open until 9 PM',
-                rating: 4.2
+                rating: 4.2,
+                reviewCount: 215,
+                photoGradient: 'linear-gradient(135deg, #3a2a1a 0%, #2a1a0d 50%, #403018 100%)'
             },
             {
                 id: 4,
                 name: 'Spice Route',
-                category: 'Ethnic Cuisine',
-                description: 'Authentic ethnic cuisine bringing the flavors of the world to your plate. Experience traditional dishes in a vibrant setting.',
+                category: 'ethnic-cuisine',
+                description: 'Authentic ethnic cuisine bringing the flavors of the world to your plate.',
+                address: '608 1st Ave, Seattle, WA 98104',
                 status: 'red',
                 hours: 'Closed - Opens at 11 AM',
-                rating: 4.6
+                rating: 4.6,
+                reviewCount: 441,
+                photoGradient: 'linear-gradient(135deg, #3a1a1a 0%, #2a100d 50%, #401818 100%)'
             },
             {
                 id: 5,
                 name: 'Street Eats Express',
-                category: 'Food Trucks',
-                description: 'Gourmet food truck experience with creative street food offerings. Follow us for our daily location and special menu items.',
+                category: 'food-trucks',
+                description: 'Gourmet food truck experience with creative street food offerings.',
+                address: '1200 Western Ave, Seattle, WA 98101',
                 status: 'green',
                 hours: 'Open until 8 PM',
-                rating: 4.3
+                rating: 4.3,
+                reviewCount: 189,
+                photoGradient: 'linear-gradient(135deg, #1a2a3a 0%, #0d1828 50%, #182a40 100%)'
             },
             {
                 id: 6,
                 name: 'Velocity Lounge',
-                category: 'Night Clubs',
-                description: 'Premium nightlife destination with expert mixologists and pulsating beats. The ultimate spot for entertainment and socializing.',
+                category: 'fine-dining',
+                description: 'Premium destination with expert mixologists and refined cuisine.',
+                address: '88 Yesler Way, Seattle, WA 98104',
                 status: 'yellow',
                 hours: 'Open until 2 AM',
-                rating: 4.4
+                rating: 4.4,
+                reviewCount: 376,
+                photoGradient: 'linear-gradient(135deg, #1a1a3a 0%, #10102a 50%, #1a1840 100%)'
             }
         ];
     }
     
     displayRestaurants() {
-        this.displayRestaurantList();
+        // Legacy — now handled by renderHero + renderCarousel
     }
 }
 

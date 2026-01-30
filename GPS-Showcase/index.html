@@ -93,92 +93,102 @@
             </div>
         </div>
 
-        <!-- GPS-Showcase Home Page -->
+        <!-- GPS-Showcase Home Page — Draft 1 -->
         <div id="homePage" class="page">
-            <!-- Google Maps Container -->
-            <div class="map-container" id="mapContainer">
-                <div class="map-placeholder">
-                    <div class="map-loading">
-                        <div class="loading-spinner"></div>
-                        <p>Loading Google Maps Street View...</p>
-                        <p class="api-note">GPS API Key Required</p>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Left Sidebar -->
-            <div class="sidebar" id="sidebar">
-                <div class="sidebar-toggle" id="sidebarToggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+            <!-- Header -->
+            <header class="hp-header">
+                <div class="hp-logo">
+                    <span class="hp-logo-pin">📍</span>
+                    GPS-Showcase
                 </div>
-                
-                <nav class="sidebar-nav">
-                    <div class="nav-item" title="Live Feed">
-                        <div class="nav-circle" id="liveFeedBtn">
-                            <span class="nav-icon">🔴</span>
-                        </div>
-                        <span class="nav-label">Live Feed</span>
-                    </div>
-                    
-                    <div class="nav-item active" title="GPS-Showcase">
-                        <div class="nav-circle" id="gpsShowcaseBtn">
-                            <span class="nav-icon">🌐</span>
-                        </div>
-                        <span class="nav-label">GPS-Showcase</span>
-                    </div>
-                    
-                    <div class="nav-item" title="Media ENT">
-                        <div class="nav-circle">
-                            <span class="nav-icon">🎬</span>
-                        </div>
-                        <span class="nav-label">Media ENT</span>
-                    </div>
-                    
-                    <div class="nav-item" title="Playlist">
-                        <div class="nav-circle">
-                            <span class="nav-icon">📋</span>
-                        </div>
-                        <span class="nav-label">Playlist</span>
-                    </div>
-                </nav>
+                <span class="hp-time">--:-- --</span>
+            </header>
 
-                <div class="category-filters">
-                    <div class="toggle-group">
-                        <button class="toggle-btn active" id="favoritesToggle">Favorites</button>
-                        <button class="toggle-btn" id="allToggle">All</button>
-                    </div>
-                    
-                    <div class="scale-column">
-                        <h3>Restaurants</h3>
-                        <div class="column-categories">
-                            <button class="category-btn" data-category="fast-casual">Fast Casual</button>
-                            <button class="category-btn" data-category="fine-dining">Fine Dining</button>
-                            <button class="category-btn" data-category="casual-dining">Casual Dining</button>
-                            <button class="category-btn" data-category="ethnic-cuisine">Ethnic Cuisine</button>
-                            <button class="category-btn" data-category="food-trucks">Food Trucks</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Sidebar Navigation -->
+            <nav class="hp-sidebar">
+                <ul class="hp-nav-list">
+                    <li class="hp-nav-item" data-section="showcase">
+                        <span class="hp-nav-icon">🌐</span>
+                        <span class="hp-nav-label">Showcase</span>
+                    </li>
+                    <li class="hp-nav-item" data-section="favourite-all">
+                        <span class="hp-nav-icon">⭐</span>
+                        <span class="hp-nav-label">Favourite All</span>
+                    </li>
+                    <li class="hp-nav-item active" data-section="restaurants">
+                        <span class="hp-nav-icon">🍽️</span>
+                        <span class="hp-nav-label">Restaurants</span>
+                    </li>
+                    <li class="hp-nav-item" data-section="fast-casual">
+                        <span class="hp-nav-icon">🍔</span>
+                        <span class="hp-nav-label">Fast Casual</span>
+                    </li>
+                    <li class="hp-nav-item" data-section="fine-dining">
+                        <span class="hp-nav-icon">🥂</span>
+                        <span class="hp-nav-label">Fine Dining</span>
+                    </li>
+                    <li class="hp-nav-item" data-section="casual-dining">
+                        <span class="hp-nav-icon">🍕</span>
+                        <span class="hp-nav-label">Casual Dining</span>
+                    </li>
+                    <li class="hp-nav-item" data-section="ethnic-cuisine">
+                        <span class="hp-nav-icon">🌶️</span>
+                        <span class="hp-nav-label">Ethnic Cuisine</span>
+                    </li>
+                    <li class="hp-nav-item" data-section="food-trucks">
+                        <span class="hp-nav-icon">🚚</span>
+                        <span class="hp-nav-label">Food Trucks</span>
+                    </li>
+                    <li class="hp-nav-item" data-section="playlist">
+                        <span class="hp-nav-icon">🎵</span>
+                        <span class="hp-nav-label">Playlist</span>
+                    </li>
+                </ul>
+            </nav>
 
-            <!-- Top Bar -->
-            <div class="top-bar">
-                <div class="hamburger-menu" id="hamburgerMenu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+            <!-- Center Content -->
+            <main class="hp-center">
+                <div class="hp-section-header">
+                    <span class="hp-section-title">Restaurants</span>
+                    <div class="hp-media-controls">
+                        <button class="hp-ctrl-btn" data-dir="prev" title="Previous">⏮</button>
+                        <button class="hp-ctrl-btn" data-dir="next" title="Next">⏭</button>
+                        <button class="hp-ctrl-btn" data-dir="forward" title="Forward">⏩</button>
+                    </div>
                 </div>
-                
-                <div class="ai-command-bar">
-                    <input type="text" placeholder="AI-Voice Command Search..." id="aiCommandInput">
-                    <button class="search-btn" id="searchBtn">🔍</button>
-                </div>
-            </div>
 
-            <!-- Settings Dropdown -->
-            <div class="settings-dropdown" id="settingsDropdown">
+                <div class="hp-hero-photo" id="hpHeroPhoto">
+                    <div class="hp-hero-overlay">
+                        <div class="hp-hero-name" id="hpHeroName">Restaurant Name</div>
+                        <div class="hp-hero-address" id="hpHeroAddress">123 Main St</div>
+                    </div>
+                </div>
+
+                <div class="hp-action-row">
+                    <button class="hp-action-btn" data-action="route">Route</button>
+                    <button class="hp-action-btn" data-action="route-alt">Route</button>
+                    <button class="hp-action-btn" data-action="reservation">Reservation</button>
+                    <button class="hp-action-btn" data-action="favourite">Favourite</button>
+                </div>
+
+                <div class="hp-carousel-section">
+                    <div class="hp-carousel-title">Popular Restaurants</div>
+                    <div class="hp-carousel-track" id="hpCarouselTrack">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </main>
+
+            <!-- Right Column — Map Thumbnail -->
+            <aside class="hp-right-col">
+                <div class="hp-map-thumb" id="hpMapThumb">
+                    Map View
+                </div>
+            </aside>
+
+            <!-- Settings Dropdown (hidden, preserved for future use) -->
+            <div class="settings-dropdown" id="settingsDropdown" style="display:none;">
                 <div class="settings-content">
                     <div class="setting-group">
                         <h4>Radius Mode</h4>
@@ -188,139 +198,9 @@
                             <span class="toggle-slider"></span>
                         </label>
                     </div>
-                    
-                    <div class="setting-group">
-                        <h4>AI Features</h4>
-                        <label class="toggle-label">
-                            <span>AI-Voice Command</span>
-                            <input type="checkbox" id="aiVoiceToggle" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                        
-                        <label class="toggle-label">
-                            <span>AI-Recommendations</span>
-                            <input type="checkbox" id="aiRecommendToggle" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    
-                    <div class="setting-group">
-                        <h4>Display Mode</h4>
-                        <label class="toggle-label">
-                            <span>Light Mode</span>
-                            <input type="checkbox" id="lightModeToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    
-                    <div class="setting-group">
-                        <h4>Vibe Level Mode</h4>
-                        <label class="toggle-label">
-                            <span>High</span>
-                            <input type="checkbox" id="vibeHighToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                        
-                        <label class="toggle-label">
-                            <span>Mid</span>
-                            <input type="checkbox" id="vibeMidToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                        
-                        <label class="toggle-label">
-                            <span>Low</span>
-                            <input type="checkbox" id="vibeLowToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
                 </div>
             </div>
 
-            <!-- Live Feed Video Block -->
-            <div class="live-feed-block" id="liveFeedBlock">
-                <div class="video-container">
-                    <div class="video-placeholder">
-                        <div class="video-loading">
-                            <div class="loading-spinner"></div>
-                            <p>Live Feed Loading...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Area -->
-            <div class="content-area" id="contentArea">
-                <!-- Favorites View -->
-                <div id="favoritesView" class="view-content active">
-                    <div class="restaurant-list" id="restaurantList">
-                        <!-- Restaurant cards will be dynamically inserted here -->
-                    </div>
-                </div>
-
-                <!-- All View -->
-                <div id="allView" class="view-content">
-                    <div class="business-description">
-                        <h2>Business Description</h2>
-                        <p>Discover amazing restaurants and establishments in your area...</p>
-                    </div>
-                    
-                    <div class="video-reel">
-                        <div class="video-placeholder">
-                            <div class="video-loading">
-                                <div class="loading-spinner"></div>
-                                <p>Video Reel Loading...</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="action-buttons">
-                        <button class="action-btn">Route</button>
-                        <button class="action-btn">Reservations</button>
-                        <button class="action-btn">Favorites</button>
-                    </div>
-                    
-                    <div class="curated-list" id="curatedList">
-                        <!-- Curated restaurant list will be dynamically inserted here -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Business Detail Panel -->
-            <div class="business-detail-panel" id="businessDetailPanel">
-                <div class="video-reel">
-                    <div class="video-placeholder">
-                        <div class="video-loading">
-                            <div class="loading-spinner"></div>
-                            <p>Video Reel Loading...</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="business-actions">
-                    <button class="route-btn">Route</button>
-                    <button class="reservation-btn">Reservation</button>
-                </div>
-                
-                <div class="business-info">
-                    <div class="business-header">
-                        <h3 id="businessName">Restaurant Name</h3>
-                        <button class="add-favorites-btn">★ Add to Favorites</button>
-                    </div>
-                    
-                    <div class="business-hours">
-                        <span>Hours of Service:</span>
-                        <div class="status-light" id="statusLight">
-                            <div class="light green"></div>
-                        </div>
-                    </div>
-                    
-                    <button class="review-btn">⭐ Reviews</button>
-                    
-                    <div class="business-description">
-                        <p id="businessDescription">Restaurant description will appear here...</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
